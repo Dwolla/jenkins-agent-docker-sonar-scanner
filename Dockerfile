@@ -18,8 +18,8 @@ RUN apk add --no-cache curl grep sed unzip nodejs nodejs-npm bash shadow && \
     ln -s ${SONAR_RUNNER_HOME}/bin/sonar-scanner /usr/local/bin/sonar-scanner && \
     sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' /usr/lib/sonar-scanner/bin/sonar-scanner && \
     chmod +x /opt/dependency-check/bin/dependency-check.sh && \
-    chown -R jenkins /opt/dependency-check && \
-    /opt/dependency-check/bin/dependency-check.sh --updateonly
+    /opt/dependency-check/bin/dependency-check.sh --updateonly && \
+    chown -R jenkins /opt/dependency-check
 
 COPY sonar-runner.properties ${SONAR_RUNNER_HOME}/conf/sonar-scanner.properties
 
