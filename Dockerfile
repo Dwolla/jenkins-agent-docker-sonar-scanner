@@ -7,8 +7,10 @@ ENV DEPENDENCY_CHECK_VERSION=5.3.2
 USER root
 WORKDIR /opt/
 
-RUN apk add --no-cache curl grep sed unzip nodejs nodejs-npm bash shadow && \
+RUN apk add --no-cache curl ruby ruby-etc ruby-rdoc grep sed unzip nodejs nodejs-npm bash shadow && \
     npm install -g typescript && \
+    gem install bundler-audit bundler && \
+    bundle audit update && \
     curl -o ./sonarscanner.zip -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux.zip && \
     curl -o ./dependency-check.zip -L https://dl.bintray.com/jeremy-long/owasp/dependency-check-${DEPENDENCY_CHECK_VERSION}-release.zip && \
     unzip sonarscanner.zip && \
