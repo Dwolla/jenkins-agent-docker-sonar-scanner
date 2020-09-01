@@ -8,4 +8,4 @@ jobs:
   include:
       - stage: deploy
         script:
-          - if [[ ($TRAVIS_EVENT_TYPE == "push" || $TRAVIS_EVENT_TYPE = "cron") && $TRAVIS_BRANCH == "main" ]] ; then ./deploy ; fi
+          - if [[ ($TRAVIS_EVENT_TYPE == "push" || $TRAVIS_EVENT_TYPE = "cron") && $TRAVIS_BRANCH == "main" ]] ; then bash ./deploy.sh ; fi
