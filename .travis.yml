@@ -1,11 +1,17 @@
 env:
   global:
     secure: bN8lJ4RuV5+b4csVm1d4LrlZHkEEujU4eOdhjEou6uXV8ivocSbXjMdOsF6Lup4geU9x0mRDcqThncDT5gLhJqDav1dzohVPV1u7Y4vW1nEIahtU0FsTQ0XzLaNHmDFxYF2yCeBop2IVrg+JNkZaC9zrjmZ4bruBKs9NZuil8SlekzTKZIh08P1yPLsYyFh8Ct5i2fk5Z+hmoOxi7GhHby949hKgl8jozKZpOXjyTleDIqH6OrHBYHGKEahBAepUUHi39LDTN77hP3r5pGIOOEcD04PtGSpWDCU30LN5GMY6Z1RWs/kGL7E86jpF/2fPFjcvFNbu1HzJGSOwARM3RfbYN3CZ6K3TpfAmbnJ6cSqUAgJ8imhOh4Ors0um40+PjZ6IHvjRdWdohvr/PO1nCOENx7+2mexy+D1IrurUMHI6FlYDOuBOkrjrvc1pswXqrf707dGY94snxJkOYAT2IV64pqHHf8B6GrPYsfIhWAnsLvkoLh4XNO+wGoyydh8ypLHF3G16EQ8alDCbd3Hdg+YUMrwAnj7KzIIBG+NEwAOhkyLe5/+rZmU5+N5e2UgLTLGs6sYa6kOwZriBfZRhqcVtrq/LV8DT6gMxkXIn5OnXhZxA+u2IMc7cJzrov4RAdupUfdF+Ab5G+qZP+uAFgtQ+txyGvfvpKSpZjZ0uOkA=
-branches:
-  only:
-    - main
-jobs:
-  include:
-      - stage: deploy
-        script:
-          - if [[ ($TRAVIS_EVENT_TYPE == "push" || $TRAVIS_EVENT_TYPE = "cron") && $TRAVIS_BRANCH == "main" ]] ; then bash ./deploy.sh ; fi
+
+language: generic
+
+before_deploy:
+  - git config --local user.name "dwolla-bot"
+  - git config --local user.email "dev+dwolla-bot@dwolla.com"
+  - export TRAVIS_TAG=v$(date +'%Y-%m-%d')
+  - git tag $TRAVIS_TAG
+deploy:
+  provider: releases
+  token: $GITHUB_TOKEN
+  skip_cleanup: true
+  on:
+    branch: main
