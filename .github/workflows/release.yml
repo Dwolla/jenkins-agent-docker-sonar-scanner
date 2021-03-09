@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: set env
-        run: echo "::set-env name=TAG::v$(date +'%Y-%m-%d')"
+        run: echo "TAG=v$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
